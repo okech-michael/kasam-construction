@@ -7,18 +7,24 @@ publish = "staticfiles"
 PYTHON_VERSION = "3.11"
 PYTHONUNBUFFERED = "1"
 DJANGO_SETTINGS_MODULE = "config.settings"
+ALLOWED_HOSTS = "kasam-construction.netlify.app,.netlify.app,.netlify.dev,localhost,127.0.0.1"
 
+# Bundle Django project files into the Lambda function.
+# LAMBDA_TASK_ROOT (/var/task) becomes the Python path root so that
+# "config.settings", "apex.models", etc. are importable.
+[functions.django]
+included_files = ["config/**", "apex/**", "staticfiles/staticfiles.json"]
+
+# Proxy /static/* to the CDN publish root (staticfiles/ is served at /).
+# Without this, the catch-all below would send static asset requests to Lambda.
+[[redirects]]
+from = "/static/*"
+to = "/:splat"
+status = 200
+force = true
+
+# Route all other requests through the Django Lambda function.
 [[redirects]]
 from = "/*"
 to = "/.netlify/functions/django"
-status = 200
-
-[[redirects]]
-from = "/static/*"
-to = "/static/:splat"
-status = 200
-
-[[redirects]]
-from = "/media/*"
-to = "/media/:splat"
 status = 200

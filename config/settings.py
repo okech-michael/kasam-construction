@@ -16,7 +16,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-apex-construction-cha
 
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = [h.strip() for h in os.environ.get(
+    'ALLOWED_HOSTS', 'localhost,127.0.0.1,.netlify.app,.netlify.dev'
+).split(',') if h.strip()]
 
 # CSRF and CORS Settings for Netlify
 CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', 'localhost:3000').split(',')
@@ -115,6 +117,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Store sessions in signed cookies so Lambda (read-only filesystem) never
+# needs to write session data to a database or the local filesystem.
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'

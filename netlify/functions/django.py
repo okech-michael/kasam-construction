@@ -7,9 +7,11 @@ import sys
 import django
 from pathlib import Path
 
-# Add the project directory to the Python path
-project_dir = Path(__file__).parent.parent.parent
-sys.path.insert(0, str(project_dir))
+# In Netlify/Lambda, LAMBDA_TASK_ROOT=/var/task and included project files
+# (config/, apex/, etc.) are placed directly at that root.
+# In local dev, fall back to the repo root three levels up.
+project_dir = os.environ.get('LAMBDA_TASK_ROOT') or str(Path(__file__).resolve().parent.parent.parent)
+sys.path.insert(0, project_dir)
 
 # Set Django settings module
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
