@@ -95,14 +95,14 @@ export async function home(req, res) {
     const featured_projects = (await models.getFeaturedProjects()) || [];
     const testimonials = (await models.getAllTestimonials()) || [];
 
-    res.render('home.html', {
+    res.render('home', {
       featured_services,
       featured_projects,
       testimonials,
     });
   } catch (error) {
     console.error('Error in home controller:', error);
-    res.render('home.html', {
+    res.render('home', {
       featured_services: [],
       featured_projects: [],
       testimonials: [],
@@ -122,10 +122,10 @@ export async function services(req, res) {
       all_services = [...all_services, ...missing];
     }
 
-    res.render('services.html', { services: all_services });
+    res.render('services', { services: all_services });
   } catch (error) {
     console.error('Error in services controller:', error);
-    res.render('services.html', { services: DEFAULT_SERVICES });
+    res.render('services', { services: DEFAULT_SERVICES });
   }
 }
 
@@ -137,14 +137,14 @@ export async function projects(req, res) {
     
     machines.forEach(m => m.image_url = getMachineImageUrl(m));
 
-    res.render('projects.html', {
+    res.render('projects', {
       completed_projects: completed,
       ongoing_projects: ongoing,
       machines,
     });
   } catch (error) {
     console.error('Error in projects controller:', error);
-    res.render('projects.html', {
+    res.render('projects', {
       completed_projects: [],
       ongoing_projects: [],
       machines: [],
@@ -157,16 +157,16 @@ export async function about(req, res) {
     const team = await models.getAllTeamMembers();
     team.forEach(member => member.photo_url = getTeamPhotoUrl(member));
 
-    res.render('about.html', { team });
+    res.render('about', { team });
   } catch (error) {
     console.error('Error in about controller:', error);
-    res.render('about.html', { team: [] });
+    res.render('about', { team: [] });
   }
 }
 
 export async function contact(req, res) {
   if (req.method === 'GET') {
-    res.render('contact.html', {
+    res.render('contact', {
       contact_form: {},
       consultation_form: {},
       message: null,
@@ -178,7 +178,7 @@ export async function contact(req, res) {
       const { name, email, phone, message } = req.body;
       
       if (!name || !email || !message) {
-        return res.render('contact.html', {
+        return res.render('contact', {
           contact_form: req.body,
           consultation_form: {},
           message: 'Please fill in all required fields.',
@@ -191,7 +191,7 @@ export async function contact(req, res) {
         return res.redirect('/contact');
       } catch (error) {
         console.error('Error saving contact message:', error);
-        return res.render('contact.html', {
+        return res.render('contact', {
           contact_form: req.body,
           consultation_form: {},
           message: 'Error sending message. Please try again.',
@@ -201,7 +201,7 @@ export async function contact(req, res) {
       const { name, email, phone, service_interest, preferred_date, preferred_time, message } = req.body;
 
       if (!name || !email || !phone || !preferred_date || !preferred_time) {
-        return res.render('contact.html', {
+        return res.render('contact', {
           contact_form: {},
           consultation_form: req.body,
           message: 'Please fill in all required fields.',
@@ -222,7 +222,7 @@ export async function contact(req, res) {
         return res.redirect('/contact');
       } catch (error) {
         console.error('Error saving consultation booking:', error);
-        return res.render('contact.html', {
+        return res.render('contact', {
           contact_form: {},
           consultation_form: req.body,
           message: 'Error booking consultation. Please try again.',

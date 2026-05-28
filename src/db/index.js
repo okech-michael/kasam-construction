@@ -4,7 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dbPath = path.join(__dirname, '..', 'data', 'app.db');
+const dbPath = path.join(__dirname, '..', '..', 'data', 'app.db');
 
 let db = null;
 

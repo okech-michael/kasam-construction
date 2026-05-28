@@ -1,15 +1,8 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block title %}Our Services – Ka'sam Construction Enterprise{% endblock %}
-
-{% block content %}
-
 <!-- ── PAGE HERO ─────────────────────────────────────────────── -->
 <section class="page-hero">
   <div class="container page-hero-inner">
     <div class="breadcrumb">
-      <a href="{% url 'home' %}">Home</a>
+      <a href="/">Home</a>
       <span>/</span>
       <span style="color:rgba(255,255,255,.8);">Services</span>
     </div>
@@ -38,22 +31,22 @@
 <!-- ── ALL SERVICES ──────────────────────────────────────────── -->
 <section class="section-pad" style="background:var(--white);">
   <div class="container">
-    {% if services %}
+    <% if (typeof services !== 'undefined' && services && services.length > 0) { %>
     <div class="services-full-grid">
-      {% for service in services %}
+      <% services.forEach(function(service, index) { %>
       <div class="service-full-card reveal">
         <div class="service-full-img">
-          <img src="{{ service.image_url }}" alt="{{ service.title }}" loading="lazy" decoding="async" />
+          <img src="<%= service.image_url %>" alt="<%= service.title %>" loading="lazy" decoding="async" />
         </div>
         <div class="service-full-body">
-          <span class="service-num">Service {{ forloop.counter|stringformat:"02d" }}</span>
-          <h3>{{ service.title }}</h3>
-          <p>{{ service.description }}</p>
+          <span class="service-num">Service <%= (index + 1).toString().padStart(2, '0') %></span>
+          <h3><%= service.title %></h3>
+          <p><%= service.description %></p>
         </div>
       </div>
-      {% endfor %}
+      <% }); %>
     </div>
-    {% else %}
+    <% } else { %>
     <!-- Static services (shown when DB is empty) -->
     <div class="services-full-grid">
 
@@ -147,7 +140,7 @@
 
       <div class="service-full-card reveal">
         <div class="service-full-img">
-          <img src="{% static 'images/landscaping-work.webp' %}" alt="Landscaping & External Works" loading="lazy" decoding="async" />
+          <img src="/static/images/general-construction.jfif" alt="Landscaping & External Works" loading="lazy" decoding="async" />
         </div>
         <div class="service-full-body">
           <span class="service-num">Service 09</span>
@@ -179,7 +172,7 @@
       </div>
 
     </div>
-    {% endif %}
+    <% } %>
   </div>
 </section>
 
@@ -193,7 +186,7 @@
         <p>Our team is ready to discuss your specific project requirements and provide a tailored proposal. Contact us today for a free consultation.</p>
       </div>
       <div class="cta-actions">
-        <a href="{% url 'contact' %}" class="btn btn-primary">
+        <a href="/contact" class="btn btn-primary">
           <i class="fas fa-calendar-check"></i> Book Consultation
         </a>
         <a href="tel:0714712531" class="btn btn-outline">
@@ -203,5 +196,3 @@
     </div>
   </div>
 </section>
-
-{% endblock %}

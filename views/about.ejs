@@ -1,15 +1,8 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block title %}About Us &amp; Our Team – Ka'sam Construction Enterprise{% endblock %}
-
-{% block content %}
-
 <!-- ── PAGE HERO ─────────────────────────────────────────────── -->
 <section class="page-hero">
   <div class="container page-hero-inner">
     <div class="breadcrumb">
-      <a href="{% url 'home' %}">Home</a>
+      <a href="/">Home</a>
       <span>/</span>
       <span style="color:rgba(255,255,255,.8);">About Us</span>
     </div>
@@ -63,7 +56,7 @@
 
       <div class="story-img-wrap reveal">
         <div class="story-img">
-          <img src="{% static 'images/general-construction.jfif' %}" alt="Ka'sam Construction Enterprise Team" loading="lazy" decoding="async" />
+          <img src="/static/images/general-construction.jfif" alt="Ka'sam Construction Enterprise Team" loading="lazy" decoding="async" />
         </div>
       </div>
     </div>
@@ -142,54 +135,39 @@
     </div>
 
     <div class="team-grid">
-      {% if team %}
-        {% for member in team %}
+      <% if (typeof teamMembers !== 'undefined' && teamMembers && teamMembers.length > 0) { %>
+        <% teamMembers.forEach(function(member) { %>
         <div class="team-card reveal">
           <div class="team-photo">
-            <img src="{{ member.photo_url }}" alt="{{ member.name }}" loading="lazy" decoding="async" />
+            <img src="<%= member.photo_url %>" alt="<%= member.name %>" loading="lazy" decoding="async" />
           </div>
           <div class="team-body">
-            <h3>{{ member.name }}</h3>
-            <div class="team-role">{{ member.role }}</div>
-            {% if member.phone %}
-              <div class="team-contact">📞 {{ member.phone }}</div>
-            {% endif %}
-            <p>{{ member.bio|default:"A dedicated professional contributing excellence to every Ka'sam Construction Enterprise project." }}</p>
+            <h3><%= member.name %></h3>
+            <div class="team-role"><%= member.role %></div>
+            <% if (member.phone) { %>
+              <div class="team-contact">📞 <%= member.phone %></div>
+            <% } %>
+            <p><%= member.bio || 'A dedicated professional contributing excellence to every Ka\'sam Construction Enterprise project.' %></p>
             <div class="team-socials">
-              {% if member.linkedin %}
-              <a href="{{ member.linkedin }}" class="team-social-btn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
-              {% endif %}
-              {% if member.email %}
-              <a href="mailto:{{ member.email }}" class="team-social-btn"><i class="fas fa-envelope"></i></a>
-              {% endif %}
-              {% if member.phone %}
-              <a href="tel:{{ member.phone }}" class="team-social-btn"><i class="fas fa-phone"></i></a>
-              {% endif %}
+              <% if (member.linkedin) { %>
+              <a href="<%= member.linkedin %>" class="team-social-btn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+              <% } %>
+              <% if (member.email) { %>
+              <a href="mailto:<%= member.email %>" class="team-social-btn"><i class="fas fa-envelope"></i></a>
+              <% } %>
+              <% if (member.phone) { %>
+              <a href="tel:<%= member.phone %>" class="team-social-btn"><i class="fas fa-phone"></i></a>
+              <% } %>
             </div>
           </div>
         </div>
-        {% endfor %}
-      {% else %}
+        <% }); %>
+      <% } else { %>
         <!-- Static team members -->
 
         <div class="team-card reveal">
           <div class="team-photo">
-            <img src="{% static 'images/team/felix-ochieng.jpeg' %}" alt="Felix Ochieng'" loading="lazy" decoding="async" />
-          </div>
-          <div class="team-body">
-            <h3>Felix Ochieng'</h3>
-            <div class="team-role">Structural Engineer &amp; Managing Director</div>
-            <p>A seasoned structural engineer with 10+ years of experience leading complex construction projects across Kenya. Felix ensures every structure meets the highest engineering and safety standards.</p>
-            <div class="team-socials">
-              <a href="#" class="team-social-btn"><i class="fab fa-linkedin-in"></i></a>
-              <a href="mailto:felix@apexconstruction.co.ke" class="team-social-btn"><i class="fas fa-envelope"></i></a>
-            </div>
-          </div>
-        </div>
-
-        <div class="team-card reveal">
-          <div class="team-photo">
-            <img src="{% static 'images/team/maxwell.jfif' %}" alt="Maxwell Okoth" loading="lazy" decoding="async" />
+            <img src="/media/team/maxwell.jfif" alt="Maxwell Okoth" loading="lazy" decoding="async" />
           </div>
           <div class="team-body">
             <h3>Maxwell Okoth</h3>
@@ -204,52 +182,7 @@
 
         <div class="team-card reveal">
           <div class="team-photo">
-            <img src="{% static 'images/team/samuel.jpeg' %}" alt="Samuel Okech" loading="lazy" decoding="async" />
-          </div>
-          <div class="team-body">
-            <h3>Samuel Okech</h3>
-            <div class="team-role">Construction Advisor</div>
-            <p>Samuel brings deep industry knowledge and strategic insight to every project. His expertise in construction best practices ensures Ka'sam consistently delivers value to its clients.</p>
-            <div class="team-socials">
-              <a href="#" class="team-social-btn"><i class="fab fa-linkedin-in"></i></a>
-              <a href="mailto:samuel@apexconstruction.co.ke" class="team-social-btn"><i class="fas fa-envelope"></i></a>
-            </div>
-          </div>
-        </div>
-
-        <div class="team-card reveal">
-          <div class="team-photo">
-            <img src="{% static 'images/team/mica.png' %}" alt="Mike Onyango" loading="lazy" decoding="async" />
-          </div>
-          <div class="team-body">
-            <h3>Mike Onyango</h3>
-            <div class="team-role">Marketer</div>
-            <p>Mike drives Ka'sam's brand presence and client acquisition strategy with dynamic marketing initiatives, building strong relationships and showcasing the company's exceptional work to potential clients.</p>
-            <div class="team-socials">
-              <a href="#" class="team-social-btn"><i class="fab fa-linkedin-in"></i></a>
-              <a href="mailto:mike@apexconstruction.co.ke" class="team-social-btn"><i class="fas fa-envelope"></i></a>
-            </div>
-          </div>
-        </div>
-
-        <div class="team-card reveal">
-          <div class="team-photo">
-            <img src="{% static 'images/team/reagan-obondo.jpg' %}" alt="Reagan Obondo" loading="lazy" decoding="async" />
-          </div>
-          <div class="team-body">
-            <h3>Reagan Obondo</h3>
-            <div class="team-role">Lead Plumber</div>
-            <p>Reagan is a highly skilled plumbing specialist with expertise in water supply systems, drainage design, sanitary installations, and industrial pipeline works. He leads our plumbing division with precision.</p>
-            <div class="team-socials">
-              <a href="#" class="team-social-btn"><i class="fab fa-linkedin-in"></i></a>
-              <a href="mailto:reagan@apexconstruction.co.ke" class="team-social-btn"><i class="fas fa-envelope"></i></a>
-            </div>
-          </div>
-        </div>
-
-        <div class="team-card reveal">
-          <div class="team-photo">
-            <img src="{% static 'images/team/ronex.jfif' %}" alt="Ronex" loading="lazy" decoding="async" />
+            <img src="/media/team/ronex.jfif" alt="Ronex" loading="lazy" decoding="async" />
           </div>
           <div class="team-body">
             <h3>Ronex</h3>
@@ -262,22 +195,7 @@
           </div>
         </div>
 
-        <div class="team-card reveal">
-          <div class="team-photo">
-            <img src="{% static 'images/team/richard.jpg' %}" alt="Richard" loading="lazy" decoding="async" />
-          </div>
-          <div class="team-body">
-            <h3>Richard</h3>
-            <div class="team-role">Electrical Wiring Specialist</div>
-            <p>Richard heads our electrical installations team, handling power distribution, lighting design, industrial wiring, and safety systems. His meticulous approach ensures every installation is safe, efficient, and compliant.</p>
-            <div class="team-socials">
-              <a href="#" class="team-social-btn"><i class="fab fa-linkedin-in"></i></a>
-              <a href="mailto:electrical@apexconstruction.co.ke" class="team-social-btn"><i class="fas fa-envelope"></i></a>
-            </div>
-          </div>
-        </div>
-
-      {% endif %}
+      <% } %>
     </div>
   </div>
 </section>
@@ -292,7 +210,7 @@
         <p>We are always looking for talented, passionate construction professionals to join Ka'sam Construction Enterprise. Get in touch to explore career opportunities.</p>
       </div>
       <div class="cta-actions">
-        <a href="{% url 'contact' %}" class="btn btn-primary">
+        <a href="/contact" class="btn btn-primary">
           <i class="fas fa-envelope"></i> Get In Touch
         </a>
         <a href="tel:0714712531" class="btn btn-outline">
@@ -302,16 +220,3 @@
     </div>
   </div>
 </section>
-
-{% endblock %}
-
-{% block extra_css %}
-<style>
-  @media (max-width: 768px) {
-    .why-grid { grid-template-columns: 1fr !important; }
-  }
-  @media (max-width: 1024px) {
-    .why-grid { grid-template-columns: repeat(2,1fr) !important; }
-  }
-</style>
-{% endblock %}

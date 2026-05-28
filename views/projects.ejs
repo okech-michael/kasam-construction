@@ -1,0 +1,343 @@
+<!-- ── PAGE HERO ─────────────────────────────────────────────── -->
+<section class="page-hero">
+  <div class="container page-hero-inner">
+    <div class="breadcrumb">
+      <a href="/">Home</a>
+      <span>/</span>
+      <span style="color:rgba(255,255,255,.8);">Projects</span>
+    </div>
+    <h1>Our Projects</h1>
+    <p>A portfolio of completed and ongoing construction projects that demonstrate our expertise, quality, and commitment to excellence across Kenya.</p>
+  </div>
+</section>
+
+
+<!-- ── PROJECTS TABS SECTION ──────────────────────────────────── -->
+<section class="section-pad" style="background:var(--white);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Portfolio</span>
+      <h2 class="section-title">Our Work Speaks for Itself</h2>
+      <div class="divider"></div>
+    </div>
+
+    <!-- Tab Buttons -->
+    <div class="projects-tabs">
+      <button class="tab-btn active" data-target="completed-panel">
+        <i class="fas fa-check-circle" style="margin-right:6px;"></i> Completed Projects
+      </button>
+      <button class="tab-btn" data-target="ongoing-panel">
+        <i class="fas fa-hard-hat" style="margin-right:6px;"></i> Ongoing Projects
+      </button>
+      <button class="tab-btn" data-target="equipment-panel">
+        <i class="fas fa-cogs" style="margin-right:6px;"></i> Equipment Hire
+      </button>
+    </div>
+
+    <!-- Completed Projects -->
+    <div class="projects-full-grid project-tab-panel" id="completed-panel" style="display:grid;">
+      <% if (typeof completedProjects !== 'undefined' && completedProjects && completedProjects.length > 0) { %>
+        <% completedProjects.forEach(function(project, index) { %>
+        <div class="project-full-card reveal">
+          <div class="project-full-img">
+            <% if (project.image) { %>
+              <img src="<%= project.image %>" alt="<%= project.title %>" loading="lazy" decoding="async" />
+            <% } else if (index === 0) { %>
+              <img src="/static/images/genral-construction.jfif" alt="<%= project.title %>" loading="lazy" decoding="async" />
+            <% } else if (index === 1) { %>
+              <img src="/static/images/fundi-mwenye.jfif" alt="<%= project.title %>" loading="lazy" decoding="async" />
+            <% } else if (index === 2) { %>
+              <img src="/static/images/storey-building.jfif" alt="<%= project.title %>" loading="lazy" decoding="async" />
+            <% } else if (index === 3) { %>
+              <img src="/static/images/Nyalenda-estate.jfif" alt="<%= project.title %>" loading="lazy" decoding="async" />
+            <% } else { %>
+              <img src="/static/images/general-construction.jfif" alt="<%= project.title %>" loading="lazy" decoding="async" />
+            <% } %>
+          </div>
+          <div class="project-full-body">
+            <span class="project-status status-completed" style="margin-bottom:10px;display:inline-block;">Completed</span>
+            <h3><%= project.title %></h3>
+            <p><%= project.description %></p>
+            <div class="project-meta">
+              <% if (project.location) { %><span><i class="fas fa-map-marker-alt"></i> <%= project.location %></span><% } %>
+              <% if (project.year) { %><span><i class="fas fa-calendar"></i> <%= project.year %></span><% } %>
+            </div>
+          </div>
+        </div>
+        <% }); %>
+      <% } else { %>
+        <!-- Static completed projects -->
+        <div class="project-full-card reveal">
+          <div class="project-full-img">
+            <img src="/static/images/genral-construction.jfif" alt="Kisumu CBD Commercial Complex" loading="lazy" decoding="async" />
+          </div>
+          <div class="project-full-body">
+            <span class="project-status status-completed" style="margin-bottom:10px;display:inline-block;">Completed</span>
+            <h3>Kisumu CBD Commercial Complex</h3>
+            <p>A 4-storey mixed-use commercial building in the Kisumu Central Business District, featuring retail spaces on the ground floor and offices above.</p>
+            <div class="project-meta">
+              <span><i class="fas fa-map-marker-alt"></i> Kisumu CBD</span>
+              <span><i class="fas fa-calendar"></i> 2023</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-full-card reveal">
+          <div class="project-full-img">
+            <img src="/static/images/fundi-mwenye.jfif" alt="Lakeview Residential Estate" loading="lazy" decoding="async" />
+          </div>
+          <div class="project-full-body">
+            <span class="project-status status-completed" style="margin-bottom:10px;display:inline-block;">Completed</span>
+            <h3>Lakeview Residential Estate</h3>
+            <p>48-unit gated residential development with modern amenities including underground parking, swimming pool, and landscaped gardens.</p>
+            <div class="project-meta">
+              <span><i class="fas fa-map-marker-alt"></i> Milimani, Kisumu</span>
+              <span><i class="fas fa-calendar"></i> 2022</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-full-card reveal">
+          <div class="project-full-img">
+            <img src="/static/images/storey-building.jfif" alt="Nyalenda Road Extension" loading="lazy" decoding="async" />
+          </div>
+          <div class="project-full-body">
+            <span class="project-status status-completed" style="margin-bottom:10px;display:inline-block;">Completed</span>
+            <h3>Nyalenda Road Extension</h3>
+            <p>Infrastructure upgrade project involving 8km of asphalt road construction, complete with drainage systems, street lighting, and pedestrian walkways.</p>
+            <div class="project-meta">
+              <span><i class="fas fa-map-marker-alt"></i> Nyalenda, Kisumu</span>
+              <span><i class="fas fa-calendar"></i> 2021</span>
+            </div>
+          </div>
+        </div>
+      <% } %>
+    </div>
+
+    <!-- Ongoing Projects -->
+    <div class="projects-full-grid project-tab-panel" id="ongoing-panel" style="display:none;">
+      <% if (typeof ongoingProjects !== 'undefined' && ongoingProjects && ongoingProjects.length > 0) { %>
+        <% ongoingProjects.forEach(function(project, index) { %>
+        <div class="project-full-card reveal">
+          <div class="project-full-img">
+            <% if (project.image) { %>
+              <img src="<%= project.image %>" alt="<%= project.title %>" loading="lazy" decoding="async" />
+            <% } else { %>
+              <img src="/static/images/construction%20plan.jfif" alt="<%= project.title %>" loading="lazy" decoding="async" />
+            <% } %>
+          </div>
+          <div class="project-full-body">
+            <span class="project-status status-ongoing" style="margin-bottom:10px;display:inline-block;">Ongoing</span>
+            <h3><%= project.title %></h3>
+            <p><%= project.description %></p>
+            <div class="project-meta">
+              <% if (project.location) { %><span><i class="fas fa-map-marker-alt"></i> <%= project.location %></span><% } %>
+              <% if (project.year) { %><span><i class="fas fa-calendar"></i> <%= project.year %></span><% } %>
+            </div>
+          </div>
+        </div>
+        <% }); %>
+      <% } else { %>
+        <!-- Static ongoing projects -->
+        <div class="project-full-card reveal">
+          <div class="project-full-img">
+            <img src="/static/images/construction%20plan.jfif" alt="Westside Tech Park Phase 2" loading="lazy" decoding="async" />
+          </div>
+          <div class="project-full-body">
+            <span class="project-status status-ongoing" style="margin-bottom:10px;display:inline-block;">Ongoing</span>
+            <h3>Westside Tech Park Phase 2</h3>
+            <p>Modern tech hub featuring office towers, innovation labs, and collaborative workspaces. Expected completion Q4 2024.</p>
+            <div class="project-meta">
+              <span><i class="fas fa-map-marker-alt"></i> Westside, Kisumu</span>
+              <span><i class="fas fa-calendar"></i> 2024</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-full-card reveal">
+          <div class="project-full-img">
+            <img src="/static/images/nice-plan.jfif" alt="Nyamwongo Water Supply Project" loading="lazy" decoding="async" />
+          </div>
+          <div class="project-full-body">
+            <span class="project-status status-ongoing" style="margin-bottom:10px;display:inline-block;">Ongoing</span>
+            <h3>Nyamwongo Water Supply Project</h3>
+            <p>Critical infrastructure project providing clean water to 50,000+ residents. Includes treatment plant, distribution network, and community facilities.</p>
+            <div class="project-meta">
+              <span><i class="fas fa-map-marker-alt"></i> Nyamwongo, Kisumu County</span>
+              <span><i class="fas fa-calendar"></i> 2024</span>
+            </div>
+          </div>
+        </div>
+      <% } %>
+    </div>
+
+    <!-- Equipment Hire -->
+    <div class="projects-full-grid project-tab-panel" id="equipment-panel" style="display:none;">
+      <% if (typeof equipment !== 'undefined' && equipment && equipment.length > 0) { %>
+        <% equipment.forEach(function(item, index) { %>
+        <div class="project-full-card reveal">
+          <div class="project-full-img">
+            <img src="<%= item.image %>" alt="<%= item.name %>" loading="lazy" decoding="async" />
+          </div>
+          <div class="project-full-body">
+            <span class="project-num">Equipment <%= (index + 1).toString().padStart(2, '0') %></span>
+            <h3><%= item.name %></h3>
+            <p><%= item.description %></p>
+            <div class="project-meta">
+              <span><i class="fas fa-tag"></i> KES <%= item.rate %>/day</span>
+              <span><i class="fas fa-check-circle" style="color:<%= item.is_available ? 'var(--accent)' : '#999' %>;"></i> <%= item.is_available ? 'Available' : 'Unavailable' %></span>
+            </div>
+          </div>
+        </div>
+        <% }); %>
+      <% } else { %>
+        <!-- Static equipment -->
+        <div class="project-full-card reveal">
+          <div class="project-full-img">
+            <img src="/static/images/crane_at_work.jfif" alt="Tower Crane" loading="lazy" decoding="async" />
+          </div>
+          <div class="project-full-body">
+            <span class="project-num">Equipment 01</span>
+            <h3>Tower Crane (50T Capacity)</h3>
+            <p>Heavy-duty tower crane ideal for high-rise construction. Precision control with experienced operators. Includes setup and dismantling services.</p>
+            <div class="project-meta">
+              <span><i class="fas fa-tag"></i> KES 15,000/day</span>
+              <span><i class="fas fa-check-circle" style="color:var(--accent);"></i> Available</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-full-card reveal">
+          <div class="project-full-img">
+            <img src="/static/images/concrete-mixer.jfif" alt="Concrete Mixer" loading="lazy" decoding="async" />
+          </div>
+          <div class="project-full-body">
+            <span class="project-num">Equipment 02</span>
+            <h3>Concrete Mixer (2m³)</h3>
+            <p>Professional-grade concrete mixer for consistent mix quality. Perfect for medium to large projects. Includes delivery and operator training.</p>
+            <div class="project-meta">
+              <span><i class="fas fa-tag"></i> KES 2,500/day</span>
+              <span><i class="fas fa-check-circle" style="color:var(--accent);"></i> Available</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-full-card reveal">
+          <div class="project-full-img">
+            <img src="/static/images/compactor-roler.jfif" alt="Road Roller" loading="lazy" decoding="async" />
+          </div>
+          <div class="project-full-body">
+            <span class="project-num">Equipment 03</span>
+            <h3>Vibratory Road Roller</h3>
+            <p>Heavy compaction equipment for road and foundation work. Ensures optimal density and stability. Fully maintained and regularly serviced.</p>
+            <div class="project-meta">
+              <span><i class="fas fa-tag"></i> KES 4,000/day</span>
+              <span><i class="fas fa-check-circle" style="color:var(--accent);"></i> Available</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-full-card reveal">
+          <div class="project-full-img">
+            <img src="/static/images/tipper-truck.jfif" alt="Tipper Truck" loading="lazy" decoding="async" />
+          </div>
+          <div class="project-full-body">
+            <span class="project-num">Equipment 04</span>
+            <h3>Tipper Truck (10-Ton)</h3>
+            <p>Reliable material transport for bulk supplies. Includes driver. Available for long-term hire with flexible pricing.</p>
+            <div class="project-meta">
+              <span><i class="fas fa-tag"></i> KES 3,500/day</span>
+              <span><i class="fas fa-check-circle" style="color:var(--accent);"></i> Available</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-full-card reveal">
+          <div class="project-full-img">
+            <img src="/static/images/water-bowser.jfif" alt="Water Bowser" loading="lazy" decoding="async" />
+          </div>
+          <div class="project-full-body">
+            <span class="project-num">Equipment 05</span>
+            <h3>Water Bowser (5,000L)</h3>
+            <p>Essential for dust control and construction activities. Regularly maintained and equipped with delivery pump.</p>
+            <div class="project-meta">
+              <span><i class="fas fa-tag"></i> KES 1,500/day</span>
+              <span><i class="fas fa-check-circle" style="color:var(--accent);"></i> Available</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-full-card reveal">
+          <div class="project-full-img">
+            <img src="/static/images/GEnerator-vibrator.jfif" alt="Power Generator" loading="lazy" decoding="async" />
+          </div>
+          <div class="project-full-body">
+            <span class="project-num">Equipment 06</span>
+            <h3>Power Generator (100kW)</h3>
+            <p>Heavy-duty generator for site power. Fuel efficient and reliable. Includes fuel and basic maintenance.</p>
+            <div class="project-meta">
+              <span><i class="fas fa-tag"></i> KES 3,000/day</span>
+              <span><i class="fas fa-check-circle" style="color:var(--accent);"></i> Available</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-full-card reveal">
+          <div class="project-full-img">
+            <img src="/static/images/welding-machine.jfif" alt="Welding Equipment" loading="lazy" decoding="async" />
+          </div>
+          <div class="project-full-body">
+            <span class="project-num">Equipment 07</span>
+            <h3>Professional Welding Equipment</h3>
+            <p>Complete welding setup for structural and fabrication work. Includes consumables and skilled operator support.</p>
+            <div class="project-meta">
+              <span><i class="fas fa-tag"></i> KES 2,000/day</span>
+              <span><i class="fas fa-check-circle" style="color:var(--accent);"></i> Available</span>
+            </div>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── CTA ───────────────────────────────────────────────────── -->
+<section class="cta-banner">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <h2>Looking to Rent Equipment or Start a Project?</h2>
+        <p>Contact us for competitive rates on equipment hire or to discuss your construction project.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="/contact" class="btn btn-primary">
+          <i class="fas fa-calendar-check"></i> Book Now
+        </a>
+        <a href="tel:0714712531" class="btn btn-outline">
+          <i class="fas fa-phone"></i> 0714 712 531
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Tab switching functionality
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const target = this.getAttribute('data-target');
+      
+      // Hide all panels
+      document.querySelectorAll('.project-tab-panel').forEach(panel => {
+        panel.style.display = 'none';
+      });
+      
+      // Remove active class from all buttons
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('active');
+      });
+      
+      // Show selected panel and mark button as active
+      document.getElementById(target).style.display = 'grid';
+      this.classList.add('active');
+    });
+  });
+</script>
