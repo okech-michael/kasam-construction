@@ -154,13 +154,13 @@ export async function projects(req, res) {
 
 export async function about(req, res) {
   try {
-    const team = await models.getAllTeamMembers();
-    team.forEach(member => member.photo_url = getTeamPhotoUrl(member));
+    const teamMembers = await models.getAllTeamMembers();
+    teamMembers.forEach(member => member.photo_url = getTeamPhotoUrl(member));
 
-    res.render('about', { team });
+    res.render('about', { teamMembers });
   } catch (error) {
     console.error('Error in about controller:', error);
-    res.render('about', { team: [] });
+    res.render('about', { teamMembers: [] });
   }
 }
 
