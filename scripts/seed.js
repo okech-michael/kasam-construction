@@ -30,16 +30,7 @@ async function seedDatabase() {
         linkedin: 'https://linkedin.com/in/maxwell-okoth',
         order: 2
       },
-      {
-        name: 'Samuel Oketch',
-        role: 'Project Manager',
-        bio: 'Samuel is an experienced project manager with a proven track record of delivering complex construction projects on time and within budget. He ensures seamless coordination between all stakeholders, from design to final handover.',
-        photo: '/static/images/team/maxwell.jfif',
-        email: 'samuel@kasamenterprises.com',
-        phone: '+254 723 334 455',
-        linkedin: 'https://linkedin.com/in/samuel-oketch',
-        order: 3
-      },
+
       {
         name: 'Ronald Obondo',
         role: 'Site Supervisor',
@@ -59,16 +50,7 @@ async function seedDatabase() {
         phone: '+254 725 667 788',
         order: 5
       },
-      {
-        name: 'Mike Onyango',
-        role: 'Structural Engineer',
-        bio: 'Mike is a licensed structural engineer with deep expertise in complex building systems. He ensures all structures meet or exceed building codes and engineering standards, providing safe, durable foundations for every project.',
-        photo: '/static/images/team/maxwell.jfif',
-        email: 'mike@kasamenterprises.com',
-        phone: '+254 726 778 899',
-        linkedin: 'https://linkedin.com/in/mike-onyango',
-        order: 6
-      }
+
     ];
 
     for (const member of teamMembers) {

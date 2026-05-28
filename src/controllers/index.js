@@ -69,8 +69,6 @@ const MACHINE_IMAGE_MAP = {
 const TEAM_PHOTO_MAP = {
   "Felix Ochieng'": '/static/images/team/felix-ochieng.jpeg',
   'Maxwell Okoth': '/static/images/team/maxwell.jfif',
-  'Samuel Oketch': '/static/images/team/samuel.jpeg',
-  'Mike Onyango': '/static/images/team/mica.png',
   'Reagan Obondo': '/static/images/team/reagan-obondo.jpg',
   'Ronex': '/static/images/team/ronex.jfif',
   'Richard': '/static/images/team/richard.jpg',
