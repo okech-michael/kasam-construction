@@ -1,172 +1,79 @@
-# Ka'sam Construction Enterprise - Node.js
+# Ka'sam Construction Enterprise
 
-Ka'sam Construction Enterprise is a modern Node.js/Express-based website for a construction company. The project includes:
+An Express and EJS website for Ka'sam Construction Enterprise, backed by PostgreSQL on Supabase.
 
-- Services, projects, team members, testimonials, and machine hire models
-- A contact page with message and consultation forms
-- Dynamic templates powered by Express routes and SQLite database
-- Static assets for CSS and JavaScript
-- **Production-ready for Vercel deployment**
+## Requirements
 
-## Quick Start (Local Development)
+- Node.js 24 and npm
+- A Supabase project with PostgreSQL enabled
 
-### Prerequisites
-- Node.js 18+ and npm
-- SQLite3 (included with Node.js sqlite3 package)
-
-### Setup
+## Setup
 
 1. Install dependencies:
    ```bash
    npm install
    ```
 
-2. Create a `.env` file (copy from `.env.example`):
-   ```bash
-   cp .env.example .env
-   ```
-   
-   For local development, the defaults work fine.
+2. Copy `.env.example` to `.env` and set `DATABASE_URL` to the PostgreSQL connection string from your Supabase dashboard. For Vercel/serverless deployment, use Supabase's transaction pooler connection string and keep `sslmode=require`.
 
-3. Initialize the database:
+3. Create the database tables and indexes:
    ```bash
    npm run migrate
    ```
 
-4. Run the development server:
+4. Preserve data from the included SQLite database by importing it into a fresh Supabase database:
+   ```bash
+   npm run import:sqlite
+   ```
+
+   If you are not importing the bundled SQLite data, use `npm run seed` to add the starter team members and testimonials instead. Avoid running both commands because seeding adds testimonial rows.
+
+5. Start the development server:
    ```bash
    npm run dev
    ```
 
-5. Open the site in your browser at `http://localhost:3000/`
+The app also runs the idempotent schema setup on startup. Keep `DATABASE_URL` and `SESSION_SECRET` private; never commit production credentials.
 
-## Project Structure
+## Supabase and Vercel deployment
 
-```
-ka-sam-enterprises/
-├── src/                       # Source code
-│   ├── models/               # Database models and queries
-│   │   └── index.js          # Model functions
-│   ├── controllers/          # Route handlers
-│   │   └── index.js          # Controller functions
-│   ├── routes/               # Express routes
-│   │   └── index.js          # Route definitions
-│   ├── db/                   # Database setup
-│   │   └── index.js          # SQLite configuration
-│   ├── utils/                # Utility functions
-│   │   └── helpers.js        # Helper functions
-│   └── middleware/           # Custom middleware
-├── views/                     # EJS templates
-│   ├── home.html
-│   ├── services.html
-│   ├── projects.html
-│   ├── about.html
-│   ├── contact.html
-│   ├── error.html
-│   └── 404.html
-├── static/                    # Static files (CSS, JS, images)
-│   ├── css/
-│   ├── js/
-│   └── images/
-├── media/                     # User-uploaded files
-├── data/                      # SQLite database file
-├── scripts/                   # Utility scripts
-│   └── migrate.js            # Database migration script
-├── server.js                 # Main application entry point
-├── vercel.json               # Vercel configuration
-├── package.json              # Node.js dependencies
-└── .env.example              # Environment variables template
-```
+1. Create a Supabase project and copy its PostgreSQL connection string. Use the transaction pooler for Vercel serverless functions.
+2. In Vercel project settings, add `DATABASE_URL` and a strong `SESSION_SECRET` for the production environment.
+3. Deploy the application.
+4. Run `npm run migrate` once with the production `DATABASE_URL` to create the schema. If transferring the bundled SQLite content, run `npm run import:sqlite` from a local environment with that same connection string before relying on the production database.
 
-## API Endpoints
+The application uses TLS with certificate verification for its PostgreSQL connection. Use a Supabase-provided connection string with SSL enabled.
+
+## Database
+
+The schema includes services, projects, team members, testimonials, machine hires, contact messages, and consultation bookings. SQL queries are parameterized in `src/models/index.js`; table and index creation is in `src/db/index.js`.
+
+## Routes
 
 - `GET /` - Home page
 - `GET /services` - Services listing
 - `GET /projects` - Projects and machine hire
 - `GET /about` - Team information
 - `GET /contact` - Contact form
-- `POST /contact` - Submit contact or consultation form
+- `POST /contact` - Submit a contact message or consultation booking
 
-## Deployment to Vercel
-
-For detailed deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md)
-
-### Quick Deploy:
-
-1. **Push to GitHub**
-   ```bash
-   git add .
-   git commit -m "Convert to Node.js - Ready for Vercel deployment"
-   git push origin main
-   ```
-
-2. **Connect to Vercel**
-   - Visit https://vercel.com
-   - Import your GitHub repository
-   - Vercel will auto-detect Node.js
-   - Environment variables are optional (all have defaults)
-   - Deploy!
-
-### Environment Variables for Vercel:
-- `NODE_ENV` - Set to `production`
-- `SESSION_SECRET` - Your session secret (auto-generated if not set)
-
-## Key Features
-
-- ✅ **Production-Ready**: Configured for Vercel serverless deployment
-- ✅ **Database**: SQLite with persistent file storage
-- ✅ **Static Files**: Optimized serving of CSS, JS, and images
-- ✅ **Security**: HTTPS support, session management
-- ✅ **Caching**: HTTP caching for performance
-- ✅ **Responsive**: Bootstrap 5 integration
-
-## Development Commands
+## Commands
 
 ```bash
-# Install dependencies
-npm install
-
-# Run development server (with auto-reload)
-npm run dev
-
-# Run production server
-npm start
-
-# Initialize/migrate database
-npm run migrate
-
-# Build for production
-npm run build
+npm run dev       # Start development server
+npm start         # Start production server
+npm run migrate   # Create/update database schema
+npm run import:sqlite # Import the bundled SQLite data
+npm run seed      # Add starter team members and testimonials
+npm run build     # Project build check
 ```
 
-## Technologies Used
+## Project structure
 
-- **Runtime**: Node.js 18+
-- **Framework**: Express.js 4.18+
-- **Database**: SQLite3
-- **Templating**: EJS
-- **Deployment**: Vercel
-- **Session Management**: express-session
-- **Environment**: dotenv
-
-## Notes
-
-- The project uses SQLite for both development and production
-- Database file is stored in `data/app.db`
-- All static files are served from the `static/` directory
-- User-uploaded media is stored in the `media/` directory
-- Sessions are managed with express-session using memory store
-
-## Troubleshooting
-
-If you encounter issues:
-
-1. Check [DEPLOYMENT.md](DEPLOYMENT.md) for deployment-specific issues
-2. Verify `.env` file is configured correctly
-3. Check the Vercel logs in your dashboard
-4. Ensure all dependencies are installed: `npm install`
-5. Try clearing the cache: `rm -rf node_modules package-lock.json && npm install`
-
-## License
-
-This project is the property of Ka'sam Construction Enterprise
+- `src/db/` - PostgreSQL pool and schema initialization
+- `src/models/` - Parameterized SQL queries
+- `src/controllers/` - Express request handlers
+- `src/routes/` - Route definitions
+- `views/` - EJS templates
+- `static/` - CSS, JavaScript, and images
+- `scripts/` - Migration, seeding, and SQLite import utilities

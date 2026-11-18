@@ -1,5 +1,6 @@
+import 'dotenv/config';
 import * as models from '../src/models/index.js';
-import { initializeDatabase } from '../src/db/index.js';
+import { closeDb, initializeDatabase } from '../src/db/index.js';
 
 async function seedDatabase() {
   try {
@@ -58,10 +59,10 @@ async function seedDatabase() {
         await models.createTeamMember(member);
         console.log(`✅ Added team member: ${member.name}`);
       } catch (error) {
-        if (error.message.includes('UNIQUE constraint failed')) {
+        if (error.code === '23505') {
           console.log(`⏭️  Team member already exists: ${member.name}`);
         } else {
-          console.error(`❌ Error adding ${member.name}:`, error.message);
+          throw error;
         }
       }
     }
@@ -120,19 +121,16 @@ async function seedDatabase() {
     ];
 
     for (const testimonial of testimonials) {
-      try {
-        await models.createTestimonial(testimonial);
-        console.log(`✅ Added testimonial from: ${testimonial.client_name}`);
-      } catch (error) {
-        console.error(`❌ Error adding testimonial from ${testimonial.client_name}:`, error.message);
-      }
+      await models.createTestimonial(testimonial);
+      console.log(`✅ Added testimonial from: ${testimonial.client_name}`);
     }
 
     console.log('✅ Database seeding completed successfully!');
-    process.exit(0);
   } catch (error) {
     console.error('❌ Seeding failed:', error);
-    process.exit(1);
+    process.exitCode = 1;
+  } finally {
+    await closeDb();
   }
 }
 
