@@ -220,35 +220,13 @@ p  { color: var(--text-body); font-size: 1rem; font-weight: 400; }
 .nav-logo {
   display: flex;
   align-items: center;
-  gap: 12px;
 }
-.nav-logo-icon {
-  width: 42px;
-  height: 42px;
-  background: var(--accent);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-head);
-  font-weight: 800;
-  font-size: 1.15rem;
-  color: var(--navy-dark);
-  flex-shrink: 0;
-}
-.nav-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
-.nav-logo-name {
-  font-family: var(--font-head);
-  font-weight: 700;
-  font-size: 1.12rem;
-  letter-spacing: .06em;
-  color: var(--white);
-}
-.nav-logo-tagline {
-  font-size: .65rem;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.55);
+.nav-logo-image {
+  display: block;
+  width: 120px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 4px;
 }
 .nav-links {
   display: flex;
