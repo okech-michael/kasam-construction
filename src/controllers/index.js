@@ -1,5 +1,4 @@
 import * as models from '../models/index.js';
-import { getStaticUrl } from '../utils/helpers.js';
 
 // Default services data for fallback
 const DEFAULT_SERVICES = [
@@ -35,7 +34,7 @@ const DEFAULT_SERVICES = [
   },
   {
     title: 'Mechanical, Electrical & Plumbing (MEP)',
-    description: 'Complete mechanical, electrical, and plumbing installations handled by certified, experienced technicians. We provide dependable MEP solutions for buildings, ensuring performance, safety, and compliance across all systems.',
+    description: 'Mechanical, electrical, and plumbing installation services for buildings, including support for power, water, drainage, and other building systems.',
     icon: 'fa-tools',
     image_url: '/static/images/design-mechanical-electrical-works.jfif'
   }
@@ -87,22 +86,29 @@ function getTeamPhotoUrl(member) {
   return TEAM_PHOTO_MAP[member.name] || (member.photo ? member.photo : '/static/images/team/maxwell.jfif');
 }
 
+function normalizeService(service) {
+  return {
+    ...service,
+    image_url: service.image_url || service.image || SERVICE_IMAGE_MAP[service.title] || '/static/images/general-construction.jfif',
+  };
+}
+
 export async function home(req, res) {
   try {
-    const featured_services = (await models.getAllServices()).slice(0, 6) || [];
-    const featured_projects = (await models.getFeaturedProjects()) || [];
+    const featuredServices = (await models.getAllServices()).slice(0, 6).map(normalizeService);
+    const featuredProjects = (await models.getFeaturedProjects()) || [];
     const testimonials = (await models.getAllTestimonials()) || [];
 
     res.render('home', {
-      featured_services,
-      featured_projects,
+      featuredServices,
+      featuredProjects,
       testimonials,
     });
   } catch (error) {
     console.error('Error in home controller:', error);
     res.render('home', {
-      featured_services: [],
-      featured_projects: [],
+      featuredServices: [],
+      featuredProjects: [],
       testimonials: [],
     });
   }
@@ -120,7 +126,7 @@ export async function services(req, res) {
       all_services = [...all_services, ...missing];
     }
 
-    res.render('services', { services: all_services });
+    res.render('services', { services: all_services.map(normalizeService) });
   } catch (error) {
     console.error('Error in services controller:', error);
     res.render('services', { services: DEFAULT_SERVICES });
@@ -133,19 +139,20 @@ export async function projects(req, res) {
     const ongoing = await models.getProjectsByStatus('ongoing');
     const machines = await models.getAllMachines();
     
-    machines.forEach(m => m.image_url = getMachineImageUrl(m));
-
     res.render('projects', {
-      completed_projects: completed,
-      ongoing_projects: ongoing,
-      machines,
+      completedProjects: completed,
+      ongoingProjects: ongoing,
+      equipment: machines.map(machine => ({
+        ...machine,
+        image: getMachineImageUrl(machine),
+      })),
     });
   } catch (error) {
     console.error('Error in projects controller:', error);
     res.render('projects', {
-      completed_projects: [],
-      ongoing_projects: [],
-      machines: [],
+      completedProjects: [],
+      ongoingProjects: [],
+      equipment: [],
     });
   }
 }
@@ -164,68 +171,72 @@ export async function about(req, res) {
 
 export async function contact(req, res) {
   if (req.method === 'GET') {
-    res.render('contact', {
+    const successMessage = {
+      contact: 'Thank you for reaching out! We will get back to you shortly.',
+      consultation: 'Your consultation has been booked! We will confirm shortly.',
+    }[req.query.submitted];
+
+    return res.render('contact', {
       contact_form: {},
       consultation_form: {},
-      message: null,
+      messages: successMessage ? [{ type: 'success', text: successMessage }] : [],
     });
-  } else {
-    const form_type = req.body.form_type;
+  }
 
-    if (form_type === 'contact') {
-      const { name, email, phone, message } = req.body;
-      
-      if (!name || !email || !message) {
-        return res.render('contact', {
-          contact_form: req.body,
-          consultation_form: {},
-          message: 'Please fill in all required fields.',
-        });
-      }
+  const form = req.body || {};
+  const formType = form.form_type;
+  const isContactForm = formType === 'contact';
+  const isConsultationForm = formType === 'consultation';
 
-      try {
-        await models.createContactMessage({ name, email, phone, message });
-        req.session.message = 'Thank you for reaching out! We will get back to you shortly.';
-        return res.redirect('/contact');
-      } catch (error) {
-        console.error('Error saving contact message:', error);
-        return res.render('contact', {
-          contact_form: req.body,
-          consultation_form: {},
-          message: 'Error sending message. Please try again.',
-        });
-      }
-    } else if (form_type === 'consultation') {
-      const { name, email, phone, service_interest, preferred_date, preferred_time, message } = req.body;
+  if (!isContactForm && !isConsultationForm) {
+    return res.status(400).render('contact', {
+      contact_form: {},
+      consultation_form: {},
+      messages: [{ type: 'error', text: 'Invalid form submission. Please try again.' }],
+    });
+  }
 
-      if (!name || !email || !phone || !preferred_date || !preferred_time) {
-        return res.render('contact', {
-          contact_form: {},
-          consultation_form: req.body,
-          message: 'Please fill in all required fields.',
-        });
-      }
+  const requiredFields = isContactForm
+    ? ['name', 'email', 'message']
+    : ['name', 'email', 'phone', 'preferred_date', 'preferred_time'];
 
-      try {
-        await models.createConsultationBooking({
-          name,
-          email,
-          phone,
-          service_interest,
-          preferred_date,
-          preferred_time,
-          message,
-        });
-        req.session.message = 'Your consultation has been booked! We will confirm shortly.';
-        return res.redirect('/contact');
-      } catch (error) {
-        console.error('Error saving consultation booking:', error);
-        return res.render('contact', {
-          contact_form: {},
-          consultation_form: req.body,
-          message: 'Error booking consultation. Please try again.',
-        });
-      }
+  if (requiredFields.some(field => !String(form[field] || '').trim())) {
+    return res.status(400).render('contact', {
+      contact_form: isContactForm ? form : {},
+      consultation_form: isConsultationForm ? form : {},
+      messages: [{ type: 'error', text: 'Please fill in all required fields.' }],
+    });
+  }
+
+  try {
+    if (isContactForm) {
+      const { name, email, phone, message } = form;
+      await models.createContactMessage({ name, email, phone, message });
+    } else {
+      const { name, email, phone, service_interest, preferred_date, preferred_time, message } = form;
+      await models.createConsultationBooking({
+        name,
+        email,
+        phone,
+        service_interest,
+        preferred_date,
+        preferred_time,
+        message,
+      });
     }
+
+    return res.redirect(`/contact?submitted=${formType}`);
+  } catch (error) {
+    console.error(`Error saving ${formType} form:`, error);
+    return res.status(500).render('contact', {
+      contact_form: isContactForm ? form : {},
+      consultation_form: isConsultationForm ? form : {},
+      messages: [{
+        type: 'error',
+        text: isContactForm
+          ? 'Error sending message. Please try again.'
+          : 'Error booking consultation. Please try again.',
+      }],
+    });
   }
 }

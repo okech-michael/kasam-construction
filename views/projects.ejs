@@ -7,7 +7,7 @@
       <span style="color:rgba(255,255,255,.8);">Projects</span>
     </div>
     <h1>Our Projects</h1>
-    <p>A portfolio of completed and ongoing construction projects that demonstrate our expertise, quality, and commitment to excellence across Kenya.</p>
+    <p>Browse completed projects, current work, and equipment availability as they are listed by our team.</p>
   </div>
 </section>
 
@@ -43,7 +43,7 @@
             <% if (project.image) { %>
               <img src="<%= project.image %>" alt="<%= project.title %>" loading="lazy" decoding="async" />
             <% } else if (index === 0) { %>
-              <img src="/static/images/genral-construction.jfif" alt="<%= project.title %>" loading="lazy" decoding="async" />
+              <img src="/static/images/general-construction.jfif" alt="<%= project.title %>" loading="lazy" decoding="async" />
             <% } else if (index === 1) { %>
               <img src="/static/images/fundi-mwenye.jfif" alt="<%= project.title %>" loading="lazy" decoding="async" />
             <% } else if (index === 2) { %>
@@ -66,49 +66,7 @@
         </div>
         <% }); %>
       <% } else { %>
-        <!-- Static completed projects -->
-        <div class="project-full-card reveal">
-          <div class="project-full-img">
-            <img src="/static/images/genral-construction.jfif" alt="Kisumu CBD Commercial Complex" loading="lazy" decoding="async" />
-          </div>
-          <div class="project-full-body">
-            <span class="project-status status-completed" style="margin-bottom:10px;display:inline-block;">Completed</span>
-            <h3>Kisumu CBD Commercial Complex</h3>
-            <p>A 4-storey mixed-use commercial building in the Kisumu Central Business District, featuring retail spaces on the ground floor and offices above.</p>
-            <div class="project-meta">
-              <span><i class="fas fa-map-marker-alt"></i> Kisumu CBD</span>
-              <span><i class="fas fa-calendar"></i> 2023</span>
-            </div>
-          </div>
-        </div>
-        <div class="project-full-card reveal">
-          <div class="project-full-img">
-            <img src="/static/images/fundi-mwenye.jfif" alt="Lakeview Residential Estate" loading="lazy" decoding="async" />
-          </div>
-          <div class="project-full-body">
-            <span class="project-status status-completed" style="margin-bottom:10px;display:inline-block;">Completed</span>
-            <h3>Lakeview Residential Estate</h3>
-            <p>48-unit gated residential development with modern amenities including underground parking, swimming pool, and landscaped gardens.</p>
-            <div class="project-meta">
-              <span><i class="fas fa-map-marker-alt"></i> Milimani, Kisumu</span>
-              <span><i class="fas fa-calendar"></i> 2022</span>
-            </div>
-          </div>
-        </div>
-        <div class="project-full-card reveal">
-          <div class="project-full-img">
-            <img src="/static/images/storey-building.jfif" alt="Nyalenda Road Extension" loading="lazy" decoding="async" />
-          </div>
-          <div class="project-full-body">
-            <span class="project-status status-completed" style="margin-bottom:10px;display:inline-block;">Completed</span>
-            <h3>Nyalenda Road Extension</h3>
-            <p>Infrastructure upgrade project involving 8km of asphalt road construction, complete with drainage systems, street lighting, and pedestrian walkways.</p>
-            <div class="project-meta">
-              <span><i class="fas fa-map-marker-alt"></i> Nyalenda, Kisumu</span>
-              <span><i class="fas fa-calendar"></i> 2021</span>
-            </div>
-          </div>
-        </div>
+        <p class="content-empty-state">No completed projects are currently listed. Please contact us to learn about our work.</p>
       <% } %>
     </div>
 
@@ -136,35 +94,7 @@
         </div>
         <% }); %>
       <% } else { %>
-        <!-- Static ongoing projects -->
-        <div class="project-full-card reveal">
-          <div class="project-full-img">
-            <img src="/static/images/construction%20plan.jfif" alt="Westside Tech Park Phase 2" loading="lazy" decoding="async" />
-          </div>
-          <div class="project-full-body">
-            <span class="project-status status-ongoing" style="margin-bottom:10px;display:inline-block;">Ongoing</span>
-            <h3>Westside Tech Park Phase 2</h3>
-            <p>Modern tech hub featuring office towers, innovation labs, and collaborative workspaces. Expected completion Q4 2024.</p>
-            <div class="project-meta">
-              <span><i class="fas fa-map-marker-alt"></i> Westside, Kisumu</span>
-              <span><i class="fas fa-calendar"></i> 2024</span>
-            </div>
-          </div>
-        </div>
-        <div class="project-full-card reveal">
-          <div class="project-full-img">
-            <img src="/static/images/nice-plan.jfif" alt="Nyamwongo Water Supply Project" loading="lazy" decoding="async" />
-          </div>
-          <div class="project-full-body">
-            <span class="project-status status-ongoing" style="margin-bottom:10px;display:inline-block;">Ongoing</span>
-            <h3>Nyamwongo Water Supply Project</h3>
-            <p>Critical infrastructure project providing clean water to 50,000+ residents. Includes treatment plant, distribution network, and community facilities.</p>
-            <div class="project-meta">
-              <span><i class="fas fa-map-marker-alt"></i> Nyamwongo, Kisumu County</span>
-              <span><i class="fas fa-calendar"></i> 2024</span>
-            </div>
-          </div>
-        </div>
+        <p class="content-empty-state">No current projects are listed. Please contact us for an update.</p>
       <% } %>
     </div>
 
@@ -188,111 +118,7 @@
         </div>
         <% }); %>
       <% } else { %>
-        <!-- Static equipment -->
-        <div class="project-full-card reveal">
-          <div class="project-full-img">
-            <img src="/static/images/crane_at_work.jfif" alt="Tower Crane" loading="lazy" decoding="async" />
-          </div>
-          <div class="project-full-body">
-            <span class="project-num">Equipment 01</span>
-            <h3>Tower Crane (50T Capacity)</h3>
-            <p>Heavy-duty tower crane ideal for high-rise construction. Precision control with experienced operators. Includes setup and dismantling services.</p>
-            <div class="project-meta">
-              <span><i class="fas fa-tag"></i> KES 15,000/day</span>
-              <span><i class="fas fa-check-circle" style="color:var(--accent);"></i> Available</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-full-card reveal">
-          <div class="project-full-img">
-            <img src="/static/images/concrete-mixer.jfif" alt="Concrete Mixer" loading="lazy" decoding="async" />
-          </div>
-          <div class="project-full-body">
-            <span class="project-num">Equipment 02</span>
-            <h3>Concrete Mixer (2m³)</h3>
-            <p>Professional-grade concrete mixer for consistent mix quality. Perfect for medium to large projects. Includes delivery and operator training.</p>
-            <div class="project-meta">
-              <span><i class="fas fa-tag"></i> KES 2,500/day</span>
-              <span><i class="fas fa-check-circle" style="color:var(--accent);"></i> Available</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-full-card reveal">
-          <div class="project-full-img">
-            <img src="/static/images/compactor-roler.jfif" alt="Road Roller" loading="lazy" decoding="async" />
-          </div>
-          <div class="project-full-body">
-            <span class="project-num">Equipment 03</span>
-            <h3>Vibratory Road Roller</h3>
-            <p>Heavy compaction equipment for road and foundation work. Ensures optimal density and stability. Fully maintained and regularly serviced.</p>
-            <div class="project-meta">
-              <span><i class="fas fa-tag"></i> KES 4,000/day</span>
-              <span><i class="fas fa-check-circle" style="color:var(--accent);"></i> Available</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-full-card reveal">
-          <div class="project-full-img">
-            <img src="/static/images/tipper-truck.jfif" alt="Tipper Truck" loading="lazy" decoding="async" />
-          </div>
-          <div class="project-full-body">
-            <span class="project-num">Equipment 04</span>
-            <h3>Tipper Truck (10-Ton)</h3>
-            <p>Reliable material transport for bulk supplies. Includes driver. Available for long-term hire with flexible pricing.</p>
-            <div class="project-meta">
-              <span><i class="fas fa-tag"></i> KES 3,500/day</span>
-              <span><i class="fas fa-check-circle" style="color:var(--accent);"></i> Available</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-full-card reveal">
-          <div class="project-full-img">
-            <img src="/static/images/water-bowser.jfif" alt="Water Bowser" loading="lazy" decoding="async" />
-          </div>
-          <div class="project-full-body">
-            <span class="project-num">Equipment 05</span>
-            <h3>Water Bowser (5,000L)</h3>
-            <p>Essential for dust control and construction activities. Regularly maintained and equipped with delivery pump.</p>
-            <div class="project-meta">
-              <span><i class="fas fa-tag"></i> KES 1,500/day</span>
-              <span><i class="fas fa-check-circle" style="color:var(--accent);"></i> Available</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-full-card reveal">
-          <div class="project-full-img">
-            <img src="/static/images/GEnerator-vibrator.jfif" alt="Power Generator" loading="lazy" decoding="async" />
-          </div>
-          <div class="project-full-body">
-            <span class="project-num">Equipment 06</span>
-            <h3>Power Generator (100kW)</h3>
-            <p>Heavy-duty generator for site power. Fuel efficient and reliable. Includes fuel and basic maintenance.</p>
-            <div class="project-meta">
-              <span><i class="fas fa-tag"></i> KES 3,000/day</span>
-              <span><i class="fas fa-check-circle" style="color:var(--accent);"></i> Available</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="project-full-card reveal">
-          <div class="project-full-img">
-            <img src="/static/images/welding-machine.jfif" alt="Welding Equipment" loading="lazy" decoding="async" />
-          </div>
-          <div class="project-full-body">
-            <span class="project-num">Equipment 07</span>
-            <h3>Professional Welding Equipment</h3>
-            <p>Complete welding setup for structural and fabrication work. Includes consumables and skilled operator support.</p>
-            <div class="project-meta">
-              <span><i class="fas fa-tag"></i> KES 2,000/day</span>
-              <span><i class="fas fa-check-circle" style="color:var(--accent);"></i> Available</span>
-            </div>
-          </div>
-        </div>
+        <p class="content-empty-state">Equipment availability and rates are currently being updated. Please contact us for details.</p>
       <% } %>
     </div>
   </div>

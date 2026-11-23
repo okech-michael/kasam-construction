@@ -935,6 +935,14 @@ p  { color: var(--text-body); font-size: 1rem; font-weight: 400; }
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
+.content-empty-state {
+  grid-column: 1 / -1;
+  padding: 28px;
+  border: 1px dashed rgba(11, 31, 58, .2);
+  border-radius: var(--radius);
+  color: var(--text-body);
+  text-align: center;
+}
 .project-full-card {
   border-radius: var(--radius-lg);
   overflow: hidden;

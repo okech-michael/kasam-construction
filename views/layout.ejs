@@ -55,9 +55,9 @@
 
 <!-- Messages -->
 <% if (typeof messages !== 'undefined' && messages && messages.length > 0) { %>
-<div class="django-messages">
+<div class="django-messages" aria-live="polite">
   <% messages.forEach(function(message) { %>
-  <div class="alert-msg <%= message.type === 'success' ? 'alert-success' : 'alert-error' %>">
+  <div class="alert-msg <%= message.type === 'success' ? 'alert-success' : 'alert-error' %>" role="<%= message.type === 'success' ? 'status' : 'alert' %>">
     <i class="fa-solid <%= message.type === 'success' ? 'fa-circle-check' : 'fa-circle-exclamation' %>"></i>
     <%= message.text %>
   </div>
@@ -80,13 +80,7 @@
               <img src="/static/images/logo.jpg" alt="Ka'sam Construction Enterprise" class="nav-logo-image" />
             </a>
           </div>
-          <p class="footer-about">Building the future with excellence, integrity, and precision. Kenya's trusted partner for construction, renovation, and infrastructure development.</p>
-          <div class="footer-socials">
-            <a href="#" class="footer-social" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="footer-social" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="footer-social" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" class="footer-social" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          </div>
+          <p class="footer-about">Construction, renovation, and infrastructure services based in Kisumu, Kenya.</p>
         </div>
 
         <!-- Quick Links -->
@@ -124,7 +118,7 @@
           </div>
           <div class="footer-contact-item">
             <i class="fas fa-envelope"></i>
-            <a href="mailto:info@kasamenterprises.co.ke">info@kasamenterprises.co.ke</a>
+            <a href="mailto:info@kasamenterprises.com">info@kasamenterprises.com</a>
           </div>
           <div class="footer-contact-item">
             <i class="fas fa-map-marker-alt"></i>
