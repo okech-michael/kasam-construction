@@ -35,16 +35,16 @@ An Express and EJS website for Ka'sam Construction Enterprise, backed by Postgre
    npm run dev
    ```
 
-The app also runs the idempotent schema setup on startup. Keep `DATABASE_URL` and `SESSION_SECRET` private; never commit production credentials.
+Local startup runs the idempotent schema setup. On Vercel, create the schema once with `npm run migrate` or `supabase/schema.sql`; the serverless function does not run schema DDL during startup. Keep `DATABASE_URL`, `DATABASE_SSL_CA`, and `SESSION_SECRET` private; never commit production credentials.
 
 ## Supabase and Vercel deployment
 
 1. Create a Supabase project and copy its PostgreSQL connection string. Use the transaction pooler for Vercel serverless functions.
 2. In Vercel project settings, add `DATABASE_URL` and a strong `SESSION_SECRET` for the production environment.
 3. Deploy the application.
-4. Run `npm run migrate` once with the production `DATABASE_URL` to create the schema. If transferring the bundled SQLite content, run `npm run import:sqlite` from a local environment with that same connection string before relying on the production database.
+4. Run `npm run migrate` once with the production `DATABASE_URL` to create the schema, or paste `supabase/schema.sql` into the Supabase SQL Editor. If transferring the bundled SQLite content, run `npm run import:sqlite` from a local environment with that same connection string before relying on the production database.
 
-The application uses TLS with certificate verification for its PostgreSQL connection. Use a Supabase-provided connection string with SSL enabled.
+The application always uses TLS unless `DATABASE_SSL=disable` is set. To verify the PostgreSQL server certificate, add Supabase's root certificate from Database Settings to Vercel as `DATABASE_SSL_CA`. Without that certificate, TLS remains encrypted but the server certificate is not verified.
 
 ## Database
 

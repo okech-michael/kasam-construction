@@ -6,19 +6,29 @@ let pool;
 export async function getDb() {
   if (pool) return pool;
 
-  const connectionString = process.env.DATABASE_URL;
-  if (!connectionString) {
+  const configuredUrl = process.env.DATABASE_URL;
+  if (!configuredUrl) {
     throw new Error('DATABASE_URL must be set to connect to PostgreSQL.');
   }
 
+  const connectionUrl = new URL(configuredUrl);
+  for (const option of ['sslmode', 'sslrootcert', 'sslcert', 'sslkey']) {
+    connectionUrl.searchParams.delete(option);
+  }
+
+  const sslCa = process.env.DATABASE_SSL_CA?.replace(/\\n/g, '\n');
+
   pool = new Pool({
-    connectionString,
-    max: 5,
+    connectionString: connectionUrl.toString(),
+    max: 1,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 10000,
     ssl: process.env.DATABASE_SSL === 'disable'
       ? false
-      : { rejectUnauthorized: true },
+      : {
+          rejectUnauthorized: Boolean(sslCa),
+          ...(sslCa ? { ca: sslCa } : {}),
+        },
   });
 
   pool.on('error', error => {

@@ -45,12 +45,13 @@ app.use('/', routes);
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).render('error', { error: 'An error occurred' });
+  if (res.headersSent) return next(err);
+  res.status(500).type('text').send('Internal Server Error');
 });
 
 // 404 handler
 app.use((req, res) => {
-  res.status(404).render('404', { message: 'Page not found' });
+  res.status(404).type('text').send('Page not found');
 });
 
 // Initialize database and start server
@@ -68,6 +69,8 @@ async function startServer() {
   }
 }
 
-startServer();
+if (process.env.VERCEL !== '1') {
+  startServer();
+}
 
 export default app;
