@@ -4,19 +4,19 @@ import * as models from '../models/index.js';
 const DEFAULT_SERVICES = [
   {
     title: 'General Construction Services',
-    description: 'We undertake full-scale construction projects for residential, commercial, and institutional clients. Our experienced team manages everything from site preparation and foundation to structural framing and external works, delivering durable, high-quality buildings on time and within budget.',
+    description: 'Construction services for residential, commercial, and institutional projects, including site preparation, foundations, structural work, and external works.',
     icon: 'fa-tools',
     image_url: '/static/images/general-construction.jfif'
   },
   {
     title: 'Design & Planning',
-    description: 'Our in-house architects and design engineers create functional, aesthetically refined plans tailored to your vision and budget. We handle concept development, detailed architectural drawings, structural designs, and obtain all necessary approvals from regulatory authorities.',
+    description: 'Design and planning support may include concept development, architectural drawings, structural plans, and guidance on approval processes, depending on project requirements.',
     icon: 'fa-tools',
     image_url: '/static/images/design-work.jpg'
   },
   {
     title: 'Project Management',
-    description: 'Expert end-to-end project management ensures your construction project is delivered efficiently. We coordinate contractors, manage procurement, monitor quality, and provide regular progress reports — keeping your project on schedule and on budget at every stage.',
+    description: 'Project coordination may include contractor coordination, procurement support, quality checks, and progress updates based on the agreed project scope.',
     icon: 'fa-tools',
     image_url: '/static/images/cart-excavator.jpg'
   },
@@ -28,7 +28,7 @@ const DEFAULT_SERVICES = [
   },
   {
     title: 'Civil & Infrastructure Works',
-    description: 'We design and construct vital civil infrastructure including roads, bridges, drainage systems, water supply networks, and public utilities. Our civil engineering team brings technical expertise to every project, ensuring safe, durable, and code-compliant infrastructure.',
+    description: 'Civil and infrastructure services may include roads, bridges, drainage systems, water supply networks, and public utilities. Project scope and applicable requirements are discussed for each project.',
     icon: 'fa-tools',
     image_url: '/static/images/civil-and-infrastructure-works.webp'
   },
@@ -171,10 +171,11 @@ export async function about(req, res) {
 
 export async function contact(req, res) {
   if (req.method === 'GET') {
-    const successMessage = {
-      contact: 'Thank you for reaching out! We will get back to you shortly.',
-      consultation: 'Your consultation has been booked! We will confirm shortly.',
-    }[req.query.submitted];
+    const successMessage = req.query.submitted === 'contact'
+      ? 'Thank you for reaching out! We will get back to you shortly.'
+      : req.query.submitted === 'consultation'
+        ? 'Your consultation has been booked! We will confirm shortly.'
+        : null;
 
     return res.render('contact', {
       contact_form: {},
