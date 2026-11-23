@@ -21,6 +21,8 @@ An Express and EJS website for Ka'sam Construction Enterprise, backed by Postgre
    npm run migrate
    ```
 
+   Alternatively, open **Supabase Dashboard → SQL Editor**, paste and run [`supabase/schema.sql`](./supabase/schema.sql).
+
 4. Preserve data from the included SQLite database by importing it into a fresh Supabase database:
    ```bash
    npm run import:sqlite
